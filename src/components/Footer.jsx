@@ -3,7 +3,7 @@ import React from "react"
 export default function Footer() {
 	const nofSocialMediaHandles = socialMediaHandles.length
 	return (
-		<footer className='mt-24'>
+		<footer>
 			<ul>
 				{socialMediaHandles.map((socialMediaHandle, index) => {
 					const { name, url } = socialMediaHandle
