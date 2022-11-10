@@ -10,7 +10,7 @@ function App() {
 }
 
 const sectionStyle = ctl(`
-bg-slate-900 
+bg-[#0F0F0F]
 min-h-screen 
 md:pt-36 
 md:pb-20 
