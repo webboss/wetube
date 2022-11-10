@@ -1,10 +1,9 @@
 import ctl from "@netlify/classnames-template-literals"
-import { Footer, Header } from "./components"
+import Footer from "./components/Footer"
 
 function App() {
 	return (
 		<section className={sectionStyle}>
-			<Header />
 			<Footer />
 		</section>
 	)

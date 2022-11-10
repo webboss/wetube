@@ -25,7 +25,7 @@ export default function Footer() {
 				})}
 			</ul>
 			<p className='mt-4'>
-				Please kindly note that this website has no affiliation with TailwindCSS
+				Please kindly note that this website has no affiliation with YouTube
 			</p>
 		</footer>
 	)
@@ -38,7 +38,7 @@ const socialMediaHandles = [
 	},
 	{
 		name: "GitHub",
-		url: "https://github.com/aremu-smog",
+		url: "https://github.com/webboss",
 	},
 	{
 		name: "Twitter",
