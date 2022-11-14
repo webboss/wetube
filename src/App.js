@@ -1,6 +1,6 @@
 import ctl from "@netlify/classnames-template-literals"
-import { Video } from "./components"
-import Footer from "./components/footer"
+import { Video, Footer } from "./components"
+
 import { ReactComponent as WeTube } from "./icons/wetube.svg"
 
 function App() {
