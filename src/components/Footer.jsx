@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function Footer() {
+const Footer = () => {
 	const nofSocialMediaHandles = socialMediaHandles.length
 	return (
 		<footer>
@@ -45,3 +45,5 @@ const socialMediaHandles = [
 		url: "https://twitter.com/web_bos_",
 	},
 ]
+
+export { Footer }
