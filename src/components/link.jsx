@@ -42,4 +42,4 @@ border-sky-500
 	`,
 }
 
-export default Link
+export {Link}
