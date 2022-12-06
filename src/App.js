@@ -23,7 +23,7 @@ function App() {
 const logoStyle = ctl(`
 mx-auto
 md:w-auto
-w-[126px]
+w-[128px]
 `)
 const mainStyle = ctl(`
 flex
