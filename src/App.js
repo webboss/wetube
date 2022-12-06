@@ -33,7 +33,6 @@ bg-[#0F0F0F]
 min-h-screen 
 `)
 const sectionStyle = ctl(`
-
 py-12 
 text-center 
 text-white 
