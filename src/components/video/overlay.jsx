@@ -1,14 +1,61 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import ctl from "@netlify/classnames-template-literals"
+import {
+	FaPlay,
+	FaPause,
+	FaSquareFull,
+	FaStepBackward,
+	FaStepForward,
+	FaArrowsAlt,
+	FaCompress,
+} from "react-icons/fa"
 
 const VideoOverlay = ({
 	isLoading,
 	isPlaying,
 	video,
+	videoWrapper,
 	currentTime,
 	videoDuration,
 	playPauseVideo,
+	jumpTime,
+	setJumpTime,
 }) => {
+	const [isFullScreen, setIsFullscreen] = useState(false)
+	const JUMP_FACTOR = 4
+
+	console.log(jumpTime)
+
+	const handleJumpForward = () => {
+		setJumpTime(prevJumpTime => prevJumpTime + JUMP_FACTOR)
+		const newTime = video.currentTime + JUMP_FACTOR
+
+		video.currentTime = Math.floor(newTime)
+	}
+	const handleBackward = () => {
+		setJumpTime(prevJumpTime => prevJumpTime - JUMP_FACTOR)
+		const newTime = video.currentTime - JUMP_FACTOR
+
+		video.currentTime = Math.floor(newTime)
+	}
+
+	useEffect(() => {
+		document.addEventListener("fullscreenchange", e => {
+			if (document.fullscreenElement) {
+				setIsFullscreen(true)
+			} else {
+				setIsFullscreen(false)
+			}
+		})
+	}, [])
+
+	const toggleFullScreen = () => {
+		if (document.fullscreenElement) {
+			document.exitFullscreen()
+		} else {
+			videoWrapper.requestFullscreen()
+		}
+	}
 	return (
 		<div className={videoOverlayStyle}>
 			{isLoading ? "Loading..." : ""}
@@ -19,23 +66,43 @@ const VideoOverlay = ({
 					{/* Progress bar inner */}
 					<div
 						className={`${progressBarInnerStyle} ${
-							isLoading ? "" : "progress-inner"
+							video?.ended ? "" : "progress-inner"
 						}`}
 						style={{
-							animationPlayState: isPlaying ? "running" : "paused",
-							animationDuration: isLoading ? "0s" : `${video.duration}s`,
+							animationPlayState:
+								isPlaying && !isLoading ? "running" : "paused",
+							animationDuration: video?.ended
+								? "0s"
+								: `${Math.ceil(video?.duration - jumpTime)}s`,
 						}}
 					/>
 				</div>
 				{/* Buttons Container Style */}
 				<div className={buttonsContainerStyle}>
-					<button onClick={playPauseVideo}>
-						{isPlaying ? "Pause" : "Play"}
-					</button>
+					<div>
+						<button onClick={playPauseVideo}>
+							{isPlaying ? <FaPause /> : <FaPlay />}
+						</button>
+
+						<button
+							className='disabled:opacity-70'
+							disabled={!isPlaying}
+							onClick={handleBackward}>
+							<FaStepBackward />
+						</button>
+						<button
+							className='disabled:opacity-70'
+							disabled={!isPlaying}
+							onClick={handleJumpForward}>
+							<FaStepForward />
+						</button>
+					</div>
 					<span>
 						{currentTime}/{videoDuration}
 					</span>
-					<button>Fullscreen</button>
+					<button onClick={toggleFullScreen}>
+						{isFullScreen ? <FaCompress /> : <FaArrowsAlt />}
+					</button>
 				</div>
 			</div>
 		</div>
@@ -64,7 +131,7 @@ bg-white
 `)
 
 const progressBarInnerStyle = ctl(`
-bg-black
+bg-red-500
 h-full
 w-0
 

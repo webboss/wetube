@@ -9,7 +9,9 @@ const Video = ({ src, ...props }) => {
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [videoDuration, setVideoDuration] = useState("00:00")
 	const [currentTime, setCurrentTime] = useState("00:00")
+	const [jumpTime, setJumpTime] = useState(0)
 	const videoRef = useRef(null)
+	const videoWrapperRef = useRef(null)
 
 	const playPauseVideo = () => {
 		const currentVideo = videoRef.current
@@ -27,7 +29,7 @@ const Video = ({ src, ...props }) => {
 		setCurrentTime(() => convertToMinuteSeconds(videoRef.current.currentTime))
 	}
 	return (
-		<div className={videoWrapperStyle}>
+		<div className={videoWrapperStyle} ref={videoWrapperRef}>
 			<video
 				onCanPlayThrough={() => {
 					setVideoDuration(() =>
@@ -37,7 +39,10 @@ const Video = ({ src, ...props }) => {
 				}}
 				onWaiting={() => setIsLoading(true)}
 				preload='metadata'
-				onEnded={() => setIsPlaying(false)}
+				onEnded={() => {
+					setIsPlaying(false)
+					setJumpTime(0)
+				}}
 				onTimeUpdate={onTimeUpdate}
 				{...props}
 				className={videoStyle}
@@ -50,7 +55,10 @@ const Video = ({ src, ...props }) => {
 				video={videoRef.current}
 				playPauseVideo={playPauseVideo}
 				currentTime={currentTime}
+				videoWrapper={videoWrapperRef.current}
 				videoDuration={videoDuration}
+				jumpTime={jumpTime}
+				setJumpTime={setJumpTime}
 			/>
 		</div>
 	)

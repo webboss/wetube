@@ -18,7 +18,6 @@ const convertToMinuteSeconds = duration => {
 		remainingSeconds = Math.round(duration)
 	}
 
-	console.log(duration, minutes, minutesInSeconds, remainingSeconds)
 	return `${formatToTens(minutes)}:${formatToTens(remainingSeconds)}`
 }
 
